@@ -161,7 +161,60 @@ The jobs tab contains all running or executed captures, the following options ar
 Ping
 ---------------------
 
-Use ping to establish if a remote host can be reached using ICMP.
+Use ping to establish if a remote host can be reached using ICMP echo requests. It's one of the most used tools
+to validate basic connectivity.
+
+==============================================================================================================================================
+
+=========================== ==================================================================================================================
+Hostname or IP              Hostname or IP address to send the icmp packet too
+Address Family              Send using IPv4 or IPv6
+Source address              Source address to use, can be any address configured on this firewall
+Packet size                 Specify the number of data bytes to be sent.
+                            Keep in mind this is the payload size, an IP and ICMP header are added.
+Do not fragment             Set DF bit.
+Description                 Description to be displayed in "jobs" tab
+=========================== ==================================================================================================================
+
+.. Tip::
+
+      To locate MTU (Maximum transmission unit) issues, use the "Do not fragment" option to force a packet of certain size to travel the network
+
+.. Tip::
+
+      When the default ping is not able to reach the target, but one with a preset source address is, one usally
+      needs to add a static route to force traffic using the correct source address. This is for example common
+      for IPsec policy based tunnels which install a kernel trap on the specified source network.
+
+
+The jobs tab contains all running or executed pings, the following options and properties are available per job:
+
+.. raw:: html
+
+      <ul>
+        <li> <i class="fa fa-fw fa-spinner fa-pulse"></i>Shows the ping is currently active </li>
+        <li> <i class="fa fa-fw fa-remove"></i> Remove ping (stops capture when currently active) </li>
+        <li> <i class="fa fa-fw fa-stop"></i> Stop the current ping </li>
+        <li> <i class="fa fa-fw fa-play"></i> (Re)starts the current ping, removes previous results when executed before </li>
+      </ul>
+
+
+==============================================================================================================================================
+
+=========================== ==================================================================================================================
+description                 Job description
+hostname                    Target hostname or ip address
+source_address              Source address (default empty)
+send                        Number of packets send
+received                    Number of packets received
+min                         min time to live (ms)
+max                         max time to live (ms)
+avg                         average time to live (ms)
+loss                        loss percentage
+last_error                  last found ping error
+=========================== ==================================================================================================================
+
+
 
 ---------------------
 Port Probe
@@ -175,3 +228,18 @@ Trace Route
 
 Use `traceroute <https://www.freebsd.org/cgi/man.cgi?query=traceroute>`__ /  `traceroute6 <https://www.freebsd.org/cgi/man.cgi?query=traceroute6>`__
 to measure the path traffic would follow when trying to reach a specific host.
+
+==============================================================================================================================================
+
+=========================== ==================================================================================================================
+Hostname or IP              Target hostname or ip address
+Address Family              Address family to use
+Protocol                    Protocol to use for the trace, by default UDP is used, if this doesn't work, ICMP is available as alternative
+Source address              Source address (default empty)
+=========================== ==================================================================================================================
+
+
+.. Tip::
+      The result grid also contains the `autonomous system number <https://en.wikipedia.org/wiki/Autonomous_system_(Internet)>`__
+      which can be practical if you want to filter traffic to or from a specific party. Use :menuselection:`Firewall --> Aliases`
+      to collect the associated networks and add them in rules.

@@ -6,6 +6,9 @@ As part of the OPNsense Business Edition, Deciso offers a plugin to keep all you
 an easy entry point to manage them.
 
 
+.. contents:: Index
+
+
 Installation
 ---------------------------
 
@@ -41,6 +44,29 @@ the url from the machine and the API key and secret generated above.
     :width: 100%
 
 
+.. raw:: html
+
+     <strong>Icons</strong><br/>
+     <i class="fa fa-fw fa-circle-o"></i> Group membership <br/>
+     <i class="fa fa-fw fa-archive"></i> Download configuration (or all as a zip file)  <br/>
+     <i class="fa fa-fw fa-pencil"></i> Edit host configuration<br/>
+     <i class="fa fa-fw fa-clone"></i> Clone host configuration<br/>
+     <i class="fa fa-fw fa-trash-o"></i> Delete host configuration<br/><br/>
+
+
+Central WebGui certificate management
+......................................
+
+The host configuration offers an option to link a central certificate to the managed host, in which case
+the certificate will be distributed to the host (if :code:`WebGui` is being provisioned).
+
+Using this feature, you're able to centrally manage certificates (manually or using ACME) easily.
+
+.. Tip::
+
+    Add :code:`OPNcentral - provision / reconfigure remote hosts` in :menuselection:`System --> Settings --> Cron`
+    with a daily schedule to automatically provision all attached firewalls on a daily basis.
+
 
 Alter generic host settings
 ..................................
@@ -52,7 +78,30 @@ The second tab in the screen contains the setting page which configures defaults
 ================================= ===============================================================================================================================================
 Interfaces                         Select the interfaces of the central node that would be used when merging settings on the remote firewall, only applicable on part of the
                                    configuration sections (such as the firewall). See the provisioning section for more details.
+Enable backups                     Enable centralized backups.
+#Backups to preserve               Number of backups to preserve per remote host on this machine
 ================================= ===============================================================================================================================================
+
+
+Centralized backups
+----------------------------
+
+When "Enable backups" is checked in the generic host settings tab OPNcentral will perform a nighly backup of all configured
+hosts. The host overview (:menuselection:`Management-->Host configuration`) shows the number of backups
+with their related size and last modification date for each host.
+
+.. Note::
+
+    The modification date defines the last time the remote host was changed, so if a host hasn't been changed
+    for a longer period of time this value would show an older date.
+
+.. Tip::
+    It is possible to execute the backup manually from the gui. In order to do that, go
+    to :menuselection:`Management-->Host configuration` and press the :code:`Execute backup` button.
+
+.. Tip::
+    If more frequent backups are desired, just add a cron job in :menuselection:`System-->Settings-->Cron`
+    for the task :code:`OPNcentral - backup remote hosts`.
 
 
 Multi tenancy using host groups
@@ -234,6 +283,11 @@ inspect status and push options to the attached firewalls.
     Be **very** careful pushing settings to your connected firewall which may disconnect your session, such as firewall and routing related
     options. The central management host can't predict if settings you plan to make lead to an inaccesible firewall.
 
+.. Tip::
+
+    Add :code:`OPNcentral - provision / reconfigure remote hosts` in :menuselection:`System --> Settings --> Cron`
+    with a daily schedule to automatically provision all attached firewalls on a daily basis.
+
 
 All provisioning classes known by the management machine will be shown in the table, combined with the status of each section.
 OPNcentral calculates if settings are equal, keeps track of changes and restarts related services when needed.
@@ -249,6 +303,8 @@ You can either selectlively reconfigure specific hosts with the checkbox or reco
      <i class="fa fa-refresh"></i> Changes ready to commit <br/>
      <i class="fa fa-question-circle"></i> Unknown yet configured class <br/>
      <i class="fa fa-times text-danger" style="color:#F05050"></i> Unable to connect <br/><br/>
+
+
 
 
 Provisioning classes
@@ -371,9 +427,10 @@ Merging categories will preserve the ones that are currently used on the remote 
 WebGui (Administration)
 ....................................................
 
-To prevent breakage after synchronisation, the certificate used by the webgui will be preserved after synchronisation.
+To prevent breakage after synchronisation, the certificate used by the webgui will be preserved after synchronisation
+(or the one provided in the host configuration will be shipped).
 
 .. Note:
 
-    Currently it's not possible to merge certificates and webgui admin settings, as the certificate store will be
-    overwritten in that case.
+    Currently it's not possible to merge certificates and webgui admin settings, as the certificate store will potentially
+    be overwritten in that case.

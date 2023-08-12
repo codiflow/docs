@@ -28,6 +28,11 @@ The basic field type to describe a container of objects, such as a list of addre
   This type can't be nested, only one level of ArrayField types is supported, you can use ModelRelationField to
   describe master-detail constructions.
 
+.. Tip::
+
+   In case a model needs static (non persistent) records, the :code:`getStaticChildren()` method may be implemented
+   to spawn static entries. See also the custom field chapter for implementation scenarios.
+
 
 AuthGroupField
 ------------------------------------
@@ -136,6 +141,7 @@ List of (comma) separated values, which can be validated using a regex.
    "Required", "Y,N", "Mark field as required"
    "ValidationMessage", ":code:`text`", "Error message on validation failure"
    "Mask", ":code:`regex`", "Optional validation regex"
+   "MaskPerItem", "Y,N", "Apply regex validation to each item separately"
 
 
 ConfigdActionsField
@@ -398,6 +404,7 @@ Validate if the value is a valid network address (IPv4, IPv6).
    "FieldSeparator", ":code:`text`", "Separator character to use"
    "WildcardEnabled", "Y,N", "Allow the use of the :code:`any` clause"
    "AsList", "Y,N", "Field type should return list items"
+   "Strict", "Y,N", "Disallow the usage of host bits when a netmask is used"
 
 NumericField
 ------------------------------------

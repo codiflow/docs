@@ -3,7 +3,7 @@ BIOS updates
 ====================================
 
 This page is dedicated to up-to-date BIOS update downloads as well as a generic instruction on
-how to install them. 
+how to install them.
 
 =====================================================================================================================
 
@@ -13,20 +13,21 @@ how to install them.
 
 **Product families**
 =====================================================================================================================
-|
--------------------------
-DEC800 & DEC3800 series
--------------------------
+
+--------------------------------------
+DEC800, DEC3800 & DEC4000 series
+--------------------------------------
+
 +---------------+------------------------------------------------------------------------------------------------------------------------------------------+
-|**12-2022**: Version 10 (latest)                                                                                                                          |
+|**12-2022**: Version 10a (latest)                                                                                                                         |
 +---------------+-------------------------------------------------------------------------+----------------------------------------------------------------+
 |      OS       | Download                                                                |SHA256 Checksum                                                 |
 +===============+=========================================================================+================================================================+
-| Windows       |:download:`Windows installer <files/NetBoard_A20_0010_USB_installer.zip>`|77882f0da538dc5630ff8b760dd4ac0445084374975a15703d054845e03c3bb1|
+| Windows       |:download:`Windows installer <files/NetBoard_A20_010a_USB_installer.zip>`|7911491dd1980affc189c290a4590c72105445aab3c74163b649daba1b9fd271|
 +---------------+-------------------------------------------------------------------------+----------------------------------------------------------------+
-| Linux         |:download:`Image <files/A20_0010_BIOS_USB_IMAGE.img.bz2>`                |edbbb073fe65b1ae427c5c63e5f3613da58c397e709b7934586ee59f54819800|
+| Linux         |:download:`Image <files/A20_010a_BIOS_USB_IMG.img.bz2>`                  |19d2d011b2d63eff3d6e422b475a1bde2dd76c752d1abcb224c2c4310f273a44|
 +---------------+-------------------------------------------------------------------------+----------------------------------------------------------------+
-| CVE update                                                                                                                                               |
+| CVE update.                                                                                                                                              |
 +----------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 +---------------+------------------------------------------------------------------------------------------------------------------------------------------+
@@ -43,10 +44,23 @@ DEC800 & DEC3800 series
 |   found in the InsydeH2O UEFI firmware, which affects the NetBoard `A20 <https://www.deciso.com/netboard-a20/>`_ security appliances from Deciso.        |
 +----------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-|
+
 -------------------------
 DEC700 and DEC2700 series
 -------------------------
+
++---------------+------------------------------------------------------------------------------------------------------------------------------------------+
+|**03-2023**: Version 24 (latest)                                                                                                                          |
++---------------+-------------------------------------------------------------------------+----------------------------------------------------------------+
+|      OS       | Download                                                                |SHA256 Checksum                                                 |
++===============+=========================================================================+================================================================+
+| Windows       |:download:`Windows installer <files/NetBoard_A10_0024_USB_installer.zip>`|a4f63ac91a20a74ef32a74e18f791186fba1b281734024fe52f317a59ddc3eb3|
++---------------+-------------------------------------------------------------------------+----------------------------------------------------------------+
+| Linux         |:download:`Image <files/A10_0024_BIOS_USB_IMAGE.img.bz2>`                |6831eb1945ea71b27c9fe420a842b2a8a6966c53c1935232d57cef35e1598e25|
++---------------+-------------------------------------------------------------------------+----------------------------------------------------------------+
+|   CVE Update and improved fan control.                                                                                                                   |
++----------------------------------------------------------------------------------------------------------------------------------------------------------+
+
 +---------------+------------------------------------------------------------------------------------------------------------------------------------------+
 |**03-2022**: Version 22                                                                                                                                   |
 +---------------+-------------------------------------------------------------------------+----------------------------------------------------------------+
@@ -66,11 +80,11 @@ DEC700 and DEC2700 series
 **Installation instructions**
 =====================================================================================================================
 
-Updating the UEFI firmware requires writing a bootable image to a USB drive on a separate machine. 
+Updating the UEFI firmware requires writing a bootable image to a USB drive on a separate machine.
 Make sure you have an empty or unused USB drive before starting this procedure.
 
-.. warning:: 
-    
+.. warning::
+
     All data on the USB drive will be overwritten. Make sure you have no important data on there.
     As a general warning, following this procedure is on your own risk.
 
@@ -80,7 +94,7 @@ Make sure you have an empty or unused USB drive before starting this procedure.
 Download the right file depending on your platform from the section above. For Windows,
 an installer is provided. For Linux, an image is provided.
 
-**Step 2** 
+**Step 2**
 
 
 Optionally verify the SHA256 checksum.
@@ -99,7 +113,7 @@ For Linux, decompress the image and write the image to the USB drive::
 
 Where *image name* refers to the downloaded image, and *drivename* refers to the USB drive.
 
-.. note:: 
+.. note::
 
     When selecting a drive on Linux, make sure you select the *entire* drive, not a single partition
     (e.g. */dev/sdb*, not */dev/sdb1*)
@@ -134,11 +148,11 @@ Make sure this setting is set to **Disabled**. This is explained in :ref:`legacy
 Select **Boot manager** and boot the USB drive. The UEFI shell will take over and execute the necessary BIOS update.
 If the update is complete, the machine will power off. **Do NOT do anything until the machine has shutdown.**
 
-.. note:: 
+.. note::
 
     Should the USB drive not show up, something went wrong during writing. The newly created FAT32 partition
     should be the very first block on the drive. Inspect the drive on a different machine to check the layout.
 
 **Step 9**
 
-Reboot the machine and check the new BIOS version in either the boot log or the BIOS itself. 
+Reboot the machine and check the new BIOS version in either the boot log or the BIOS itself.
