@@ -173,6 +173,7 @@ Remote Network          10.0.8.0/24  :sup:`1`
 .. admonition:: Note :sup:`1`
 
    The remote network bound to this common name, without this entry the traffic will not be routed between hosts.
+   **Pay attention here as the drop-down only lists the legacy servers and not the instances (yet). So better leave the server field empty.**
 
 
 Next go to :menuselection:`Firewall --> Rules --> WAN` and add a rule to allow traffic on port :code:`1494/UDP` from the other
